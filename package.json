@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
-    "lint": "eslint --fix",
+    "lint": "eslint ./ --fix",
     "test": "jest"
   },
   "author": "wise-crab",
