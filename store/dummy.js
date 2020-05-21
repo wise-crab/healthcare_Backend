@@ -80,9 +80,24 @@ async function addUser(table, user) {
   db[table].push(user);
 }
 
+async function updateUser(document, data) {
+  const user = await getUser(document);
+
+  user.numberId = data.numberId;
+  user.name = data.name;
+  user.lastName = data.lastName;
+  user.email = data.email;
+  user.phone = data.phone;
+  user.rol = data.rol;
+  user.deleted = data.deleted;
+
+  return true;
+}
+
 module.exports = {
   list,
   getUsers,
   getUser,
   addUser,
+  updateUser,
 };

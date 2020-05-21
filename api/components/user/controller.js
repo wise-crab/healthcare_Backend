@@ -1,4 +1,6 @@
 const { nanoid } = require('nanoid');
+const fs = require('fs').promises;
+const parse = require('csv-parse/lib/sync');
 // const auth = require('../auth');
 
 const TABLE = 'users';
@@ -34,7 +36,6 @@ module.exports = (injectedStore) => {
     if (!body.numberId || !body.name || !body.lastName || !body.email || !body.phone || !body.rol) {
       throw new Error('Invalid data');
     }
-
     const user = {
       id: nanoid(),
       numberId: body.numberId,
@@ -70,10 +71,35 @@ module.exports = (injectedStore) => {
 
   }
 
+  async function addUsersCsv(file) {
+    if (!file) {
+      throw new Error('There is not file');
+    }
+    const content = await fs.readFile(`${file.path}`);
+    const records = parse(content, { columns: true });
+    records.forEach((element) => {
+      const user = element;
+      user.numberId = parseInt(user.numberId, 10);
+      user.phone = parseInt(user.phone, 10);
+      addUser(user);
+    });
+    return true;
+  }
+
+  async function update(document, data) {
+    if (!document || !data) {
+      throw new Error('Invalid data');
+    }
+    const result = await store.updateUser(document, data, TABLE);
+    return result;
+  }
+
   return {
     list,
     getUsers,
     getUser,
     addUser,
+    update,
+    addUsersCsv,
   };
 };
