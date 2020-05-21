@@ -1,7 +1,8 @@
 const { nanoid } = require('nanoid');
 const fs = require('fs').promises;
 const parse = require('csv-parse/lib/sync');
-// const auth = require('../auth');
+const generator = require('generate-password');
+const auth = require('../auth');
 
 const TABLE = 'users';
 
@@ -66,6 +67,17 @@ module.exports = (injectedStore) => {
     }
 
     user.username = await creatUsername();
+
+    await auth.upsert({
+      id: user.id,
+      username: user.username,
+      password: generator.generate({
+        length: 10,
+        numbers: true,
+        lowercase: true,
+        uppercase: true,
+      }),
+    });
 
     store.addUser(TABLE, user);
 

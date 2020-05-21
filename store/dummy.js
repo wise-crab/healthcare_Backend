@@ -94,10 +94,19 @@ async function updateUser(document, data) {
   return true;
 }
 
+async function query(table, q) {
+  const col = await list(table);
+  const keys = Object.keys(q);
+  const key = keys[0];
+
+  return col.filter((item) => item[key] === q[key])[0] || null;
+}
+
 module.exports = {
   list,
   getUsers,
   getUser,
   addUser,
   updateUser,
+  query,
 };
