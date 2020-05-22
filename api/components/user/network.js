@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const response = require('../../../network/response');
 const Controller = require('./index');
+const secure = require('./secure');
 
 const router = express.Router();
 
@@ -73,7 +74,7 @@ function update(req, res) {
     });
 }
 
-router.get('/users', list);
+router.get('/users', secure('globalSearch'), list);
 router.get('/users-rol', getUsersByRol);
 router.get('/users/:document', getUser);
 router.post('/users', addUser);

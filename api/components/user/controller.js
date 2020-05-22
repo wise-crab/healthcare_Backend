@@ -71,6 +71,7 @@ module.exports = (injectedStore) => {
     await auth.upsert({
       id: user.id,
       username: user.username,
+      rol: user.rol,
       password: generator.generate({
         length: 10,
         numbers: true,

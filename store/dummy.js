@@ -55,6 +55,25 @@ const db = {
       rol: 'medic',
       deleted: false,
     },
+    {
+      id: 'y_8-e_lXKGTff8MxcTbPb',
+      numberId: 1019071661,
+      name: 'luis',
+      lastName: 'parra',
+      email: 'luis@gmail.com',
+      phone: '3145888791',
+      rol: 'admin',
+      deleted: false,
+      username: 'luis.parra.1564',
+    },
+  ],
+  'auth': [
+    {
+      id: 'y_8-e_lXKGTff8MxcTbPb',
+      username: 'luis.parra.1564',
+      rol: 'admin',
+      password: '$2b$05$7Sh8lEj376zKoBPOswk03.au9T1bL.xAHXlf6xpgcxJ3axoxvnh.y',
+    },
   ],
 };
 
