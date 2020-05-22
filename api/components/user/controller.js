@@ -2,6 +2,8 @@ const { nanoid } = require('nanoid');
 const fs = require('fs').promises;
 const parse = require('csv-parse/lib/sync');
 const generator = require('generate-password');
+const nodemailer = require('nodemailer');
+const config = require('../../../config');
 const auth = require('../auth');
 
 const TABLE = 'users';
@@ -66,18 +68,50 @@ module.exports = (injectedStore) => {
       return username;
     }
 
+    async function sendEmail(email, username, password) {
+
+      const transporter = nodemailer.createTransport({
+        service: `${config.email.service}`,
+        auth: {
+          user: `${config.email.user}`,
+          pass: `${config.email.password}`,
+        },
+      });
+
+      const info = await transporter.sendMail({
+        from: `${config.email.user}`,
+        to: email,
+        subject: 'Information',
+        text: `
+        username: ${username}
+        password: ${password}
+        `,
+      }, (error, info) => {
+        if (error) {
+          console.error(error);
+        } else {
+          process.stdout.write(`Email sent: ${info.response}\n`);
+        }
+      });
+
+      return info;
+    }
+
     user.username = await creatUsername();
+    const generatePassword = generator.generate({
+      length: 10,
+      numbers: true,
+      lowercase: true,
+      uppercase: true,
+    });
+
+    sendEmail(user.email, user.username, generatePassword).catch(console.error);
 
     await auth.upsert({
       id: user.id,
       username: user.username,
       rol: user.rol,
-      password: generator.generate({
-        length: 10,
-        numbers: true,
-        lowercase: true,
-        uppercase: true,
-      }),
+      password: generatePassword,
     });
 
     store.addUser(TABLE, user);
