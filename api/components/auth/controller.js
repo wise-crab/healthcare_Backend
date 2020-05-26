@@ -13,7 +13,7 @@ module.exports = function (injectedStore) {
     if (!username || !password) {
       throw new Error('Invalid Information');
     }
-    const data = await store.query(TABLE, { username });
+    const data = await store.login(username);
     if (!data) {
       throw new Error('Invalid Information');
     }
@@ -34,14 +34,14 @@ module.exports = function (injectedStore) {
 
   async function upsert(data) {
     const authData = {
-      id: data.id,
-      username: data.username,
+      userName: data.userName,
       rol: data.rol,
     };
     if (data.password) {
       authData.password = await bcrypt.hash(data.password, 5);
     }
-    return store.addUser(TABLE, authData);
+    const auth = store.addUser(TABLE, authData);
+    return auth;
   }
 
   return {

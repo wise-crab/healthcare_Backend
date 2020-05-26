@@ -1,4 +1,4 @@
-const { nanoid } = require('nanoid');
+// const { nanoid } = require('nanoid');
 const fs = require('fs').promises;
 const parse = require('csv-parse/lib/sync');
 const generator = require('generate-password');
@@ -19,56 +19,68 @@ module.exports = (injectedStore) => {
     const users = await store.list(TABLE);
     return users;
   }
+
   async function getUsers(filterUsers) {
     if (!filterUsers) {
       throw new Error('Invalid data');
     }
-    const usersRol = await store.getUsers(TABLE, filterUsers);
+    const usersRol = await store.getUsers(filterUsers);
     return usersRol;
   };
-  async function getUser(document) {
-    if (!document) {
+
+  async function getUser({ document, name }) {
+    if (!document && !name) {
       throw new Error('Invalid data');
+    } else if (document && name) {
+      throw new Error('Search by document or name');
     }
-    const numberId = parseInt(document, 10);
-    const user = await store.getUser(TABLE, numberId);
-    return user;
+
+    if (document) {
+      const numberId = parseInt(document, 10);
+      const user = await store.getUser('numberId', numberId);
+      return user;
+    }
+
+    if (name) {
+      const user = await store.getUser('name', name.toLowerCase());
+      return user;
+    }
+
   }
 
   async function addUser(body) {
-    if (!body.numberId || !body.name || !body.lastName || !body.email || !body.phone || !body.rol) {
+    if (!body.numberId || !body.name || !body.lastName || !body.email || !body.contactNumber || !body.rol) {
       throw new Error('Invalid data');
     }
     const user = {
-      id: nanoid(),
       numberId: body.numberId,
-      name: body.name,
-      lastName: body.lastName,
-      email: body.email,
-      phone: body.phone,
-      rol: body.rol,
+      name: body.name.toLowerCase(),
+      lastName: body.lastName.toLowerCase(),
+      email: body.email.toLowerCase(),
+      contactNumber: body.contactNumber,
+      rol: body.rol.toLowerCase(),
       deleted: false,
     };
 
-    async function creatUsername() {
+    async function creatuserName() {
       const { numberId } = user;
       let numbers = numberId.toString().slice(-4);
-      let username = `${user.name}.${user.lastName}.${numbers}`;
+      let userName = `${user.name}.${user.lastName}.${numbers}`;
       const users = await list();
-      const usernames = [];
-      users.forEach((element) => usernames.push(element.username));
-      for (let i = 0; i < usernames.length; i++) {
-        if (username === usernames[i]) {
+      const userNames = [];
+      users.forEach((element) => userNames.push(element.userName));
+      for (let i = 0; i < userNames.length; i++) {
+        if (userName === userNames[i]) {
           const random = () => Math.floor(Math.random() * (9));
           numbers = `${random()}${random()}${random()}${random()}`;
-          username = `${user.name}.${user.lastName}.${numbers}`;
-          return username;
+          userName = `${user.name}.${user.lastName}.${numbers}`;
+          return userName;
         }
       }
-      return username;
+      return userName;
     }
 
-    async function sendEmail(email, username, password) {
+    async function sendEmail(email, userName, password) {
 
       const transporter = nodemailer.createTransport({
         service: `${config.email.service}`,
@@ -83,7 +95,7 @@ module.exports = (injectedStore) => {
         to: email,
         subject: 'Information',
         text: `
-        username: ${username}
+        userName: ${userName}
         password: ${password}
         `,
       }, (error, info) => {
@@ -97,7 +109,7 @@ module.exports = (injectedStore) => {
       return info;
     }
 
-    user.username = await creatUsername();
+    user.userName = await creatuserName();
     const generatePassword = generator.generate({
       length: 10,
       numbers: true,
@@ -105,14 +117,15 @@ module.exports = (injectedStore) => {
       uppercase: true,
     });
 
-    sendEmail(user.email, user.username, generatePassword).catch(console.error);
+    sendEmail(user.email, user.userName, generatePassword).catch(console.error);
 
-    await auth.upsert({
-      id: user.id,
-      username: user.username,
+    const authId = await auth.upsert({
+      userName: user.userName,
       rol: user.rol,
       password: generatePassword,
     });
+
+    user.idAuth = authId;
 
     store.addUser(TABLE, user);
 
@@ -133,11 +146,11 @@ module.exports = (injectedStore) => {
     return true;
   }
 
-  async function update(document, data) {
-    if (!document || !data) {
+  async function update(id, data) {
+    if (!id || !data) {
       throw new Error('Invalid data');
     }
-    const result = await store.updateUser(document, data, TABLE);
+    const result = await store.updateUser(id, data);
     return result;
   }
 

@@ -32,8 +32,8 @@ function getUsersByRol(req, res) {
 }
 
 function getUser(req, res) {
-  const { document } = req.params;
-  Controller.getUser(document)
+  const { query } = req;
+  Controller.getUser(query)
     .then((user) => {
       response.success(req, res, user, 200);
     })
@@ -63,9 +63,9 @@ function addUsersCsv(req, res) {
 }
 
 function update(req, res) {
-  const { document } = req.params;
+  const { id } = req.params;
   const data = req.body;
-  Controller.update(document, data)
+  Controller.update(id, data)
     .then((user) => {
       response.success(req, res, 'user update', 200);
     })
@@ -75,10 +75,10 @@ function update(req, res) {
 }
 
 router.get('/users', secure('globalSearch'), list);
-router.get('/users-rol', getUsersByRol);
-router.get('/users/:document', getUser);
-router.post('/users', addUser);
-router.post('/users-csv', upload.single('file'), addUsersCsv);
-router.put('/users/:document', update);
+router.get('/users-rol', secure('rolSearch'), getUsersByRol);
+router.get('/users/user', secure('userSearch'), getUser);
+router.post('/users', secure('createUser'), addUser);
+router.post('/users-csv', secure('createUser'), upload.single('file'), addUsersCsv);
+router.put('/users/:id', secure('updateUser'), update);
 
 module.exports = router;
