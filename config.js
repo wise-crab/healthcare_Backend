@@ -16,5 +16,7 @@ module.exports = {
   database: {
     user: process.env.DATABASE_USER_DEV,
     pass: process.env.DATABASE_PASS_DEV,
+    host: process.env.DATABASE_HOST,
+    name: process.env.DATABASE_NAME,
   },
 };
