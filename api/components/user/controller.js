@@ -1,4 +1,4 @@
-const { nanoid } = require('nanoid');
+// const { nanoid } = require('nanoid');
 const fs = require('fs').promises;
 const parse = require('csv-parse/lib/sync');
 const generator = require('generate-password');
@@ -19,20 +19,33 @@ module.exports = (injectedStore) => {
     const users = await store.list(TABLE);
     return users;
   }
+
   async function getUsers(filterUsers) {
     if (!filterUsers) {
       throw new Error('Invalid data');
     }
-    const usersRol = await store.getUsers(TABLE, filterUsers);
+    const usersRol = await store.getUsers(filterUsers);
     return usersRol;
   };
-  async function getUser(document) {
-    if (!document) {
+
+  async function getUser({ document, name }) {
+    if (!document && !name) {
       throw new Error('Invalid data');
+    } else if (document && name) {
+      throw new Error('Search by document or name');
     }
-    const numberId = parseInt(document, 10);
-    const user = await store.getUser(TABLE, numberId);
-    return user;
+
+    if (document) {
+      const numberId = parseInt(document, 10);
+      const user = await store.getUser('numberId', numberId);
+      return user;
+    }
+
+    if (name) {
+      const user = await store.getUser('name', name.toLowerCase());
+      return user;
+    }
+
   }
 
   async function addUser(body) {
@@ -40,13 +53,12 @@ module.exports = (injectedStore) => {
       throw new Error('Invalid data');
     }
     const user = {
-      id: nanoid(),
       numberId: body.numberId,
-      name: body.name,
-      lastName: body.lastName,
-      email: body.email,
+      name: body.name.toLowerCase(),
+      lastName: body.lastName.toLowerCase(),
+      email: body.email.toLowerCase(),
       contactNumber: body.contactNumber,
-      rol: body.rol,
+      rol: body.rol.toLowerCase(),
       deleted: false,
     };
 
@@ -134,11 +146,11 @@ module.exports = (injectedStore) => {
     return true;
   }
 
-  async function update(document, data) {
-    if (!document || !data) {
+  async function update(id, data) {
+    if (!id || !data) {
       throw new Error('Invalid data');
     }
-    const result = await store.updateUser(document, data, TABLE);
+    const result = await store.updateUser(id, data);
     return result;
   }
 

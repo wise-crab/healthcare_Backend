@@ -8,6 +8,11 @@ module.exports = function checkAuth(action) {
         next();
         break;
 
+      case 'rolSearch':
+        auth.check.rol(req);
+        next();
+        break;
+
       case 'createUser':
         auth.check.admin(req);
         next();
@@ -20,6 +25,11 @@ module.exports = function checkAuth(action) {
 
       case 'deletedUser':
         auth.check.admin(req);
+        next();
+        break;
+
+      case 'userSearch':
+        auth.check.rol(req);
         next();
         break;
 

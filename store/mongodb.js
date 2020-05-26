@@ -34,18 +34,29 @@ async function addUser(table, user) {
   }
 }
 
-async function getUsers(table, filterUsers) {
-  const users = await UserModel.find({ rol: filterUsers });
+async function getUsers(filterUsers) {
+  const users = await UserModel.find({ rol: filterUsers, deleted: false });
   return users;
 }
 
-async function getUser(table, query) {
-  const user = await UserModel.findOne({ numberId: query });
-  return user;
+async function getUser(type, query) {
+  if (type === 'numberId') {
+    const user = await UserModel.findOne({ numberId: query });
+    return user;
+  }
+  if (type === 'name') {
+    const user = await UserModel.find({ name: query });
+    return user;
+  }
 }
 
 async function updateUser(id, data) {
   const user = await UserModel.updateOne({ _id: id }, data);
+  return user;
+}
+
+async function login(username) {
+  const user = await AuthModel.findOne({ userName: username });
   return user;
 }
 
@@ -55,4 +66,5 @@ module.exports = {
   getUsers,
   getUser,
   updateUser,
+  login,
 };

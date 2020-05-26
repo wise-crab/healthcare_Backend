@@ -13,7 +13,7 @@ module.exports = function (injectedStore) {
     if (!username || !password) {
       throw new Error('Invalid Information');
     }
-    const data = await store.query(TABLE, { username });
+    const data = await store.login(username);
     if (!data) {
       throw new Error('Invalid Information');
     }

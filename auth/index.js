@@ -44,6 +44,13 @@ const check = {
       throw error('You can not do that', 401);
     }
   },
+  rol(req) {
+    const decoded = decodeHeader(req);
+    const userRol = decoded.data.rol;
+    if (userRol !== 'admin' && userRol !== 'medic' && userRol !== 'bacteriologist') {
+      throw error('You can not do that', 401);
+    }
+  },
 };
 
 module.exports = {
