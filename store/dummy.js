@@ -72,7 +72,7 @@ const db = {
       id: 'y_8-e_lXKGTff8MxcTbPb',
       username: 'luis.parra.1564',
       rol: 'admin',
-      password: '$2b$05$7Sh8lEj376zKoBPOswk03.au9T1bL.xAHXlf6xpgcxJ3axoxvnh.y',
+      password: '$2b$05$QS1ByFFrv5N77QJTUkF9kO8jW5k5ezzUu/3PkmsGICv7IPVGr4FWy',
     },
   ],
 };
@@ -81,18 +81,18 @@ async function list(table) {
   return db[table] || [];
 }
 
-async function getUsers(table, filterUsers) {
+async function getUsers(filterUsers, table = 'users') {
   const col = await list(table);
   const result = col.filter((item) => item.rol === filterUsers);
   return result;
 }
 
-async function getUser(table, numberId) {
+async function getUser(data = 'document', numberId, table = 'users') {
   const col = await list(table);
   return col.filter((item) => item.numberId === numberId) || null;
 }
 
-async function addUser(table, user) {
+async function addUser(user, table = 'users') {
   if (!db[table]) {
     db[table] = [];
   }
@@ -113,7 +113,7 @@ async function updateUser(document, data) {
   return true;
 }
 
-async function query(table, q) {
+async function query(q, table = 'users') {
   const col = await list(table);
   const keys = Object.keys(q);
   const key = keys[0];

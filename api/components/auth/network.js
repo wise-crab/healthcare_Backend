@@ -11,7 +11,7 @@ function login(req, res) {
       response.success(req, res, token, 200);
     })
     .catch((error) => {
-      response.error(req, res, error.message, 400);
+      response.error(req, res, error.message, 401);
     });
 };
 
