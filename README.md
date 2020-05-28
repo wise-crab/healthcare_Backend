@@ -29,3 +29,7 @@ If you want to see the documentation, access to the route **/api-docs**
 ## Architecture
 
 (https://github.com/wise-crab/wise-crab.github.io)
+
+
+## questions
+  More information about the current logged user
