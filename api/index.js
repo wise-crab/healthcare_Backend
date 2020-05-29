@@ -8,11 +8,11 @@ const config = require('../config');
 
 const app = express();
 
-
 app.use(cors());
 
 const user = require('./components/user/network');
 const auth = require('./components/auth/network');
+const typesExams = require('./components/typesExams/network');
 
 app.use(bodyParser.json());
 const swaggerDoc = require('./swagger.json');
@@ -20,6 +20,7 @@ const swaggerDoc = require('./swagger.json');
 //Routes
 app.use(user);
 app.use(auth);
+app.use(typesExams);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.listen(config.api.port, () => {

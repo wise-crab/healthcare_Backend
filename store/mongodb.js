@@ -2,6 +2,7 @@ const db = require('mongoose');
 const config = require('../config');
 const UserModel = require('../api/components/user/model');
 const AuthModel = require('../api/components/auth/model');
+const TypeExamsModel = require('../api/components/typesExams/model');
 
 db.Promise = global.Promise;
 
@@ -16,6 +17,10 @@ async function list(table) {
   if (table === 'users') {
     const users = UserModel.find();
     return users;
+  }
+  if (table === 'typesexams') {
+    const typeExams = TypeExamsModel.find();
+    return typeExams;
   }
 
   return null;
@@ -60,6 +65,32 @@ async function login(username) {
   return user;
 }
 
+async function get(table, id) {
+  if (table === 'typesexams') {
+    const exam = TypeExamsModel.findOne({ _id: id });
+    return exam;
+  }
+  return null;
+}
+
+async function upsert(table, data) {
+  // data._id = data.id;
+
+  if (table === 'typesexams') {
+    const exist = await TypeExamsModel.findOne({ _id: data._id });
+    if (exist) {
+      exist.update(data, (err) => {
+        if (err) console.error(err);
+      });
+    } else {
+      const typeExam = new TypeExamsModel(data);
+      typeExam.save();
+    }
+  }
+
+  return null;
+}
+
 module.exports = {
   list,
   addUser,
@@ -67,4 +98,6 @@ module.exports = {
   getUser,
   updateUser,
   login,
+  get,
+  upsert,
 };
