@@ -8,7 +8,6 @@ const config = require('../config');
 
 const app = express();
 
-
 app.use(cors());
 
 const user = require('./components/user/network');

@@ -7,7 +7,9 @@
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
     "lint": "eslint ./ --fix",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "author": "wise-crab",
   "license": "MIT",
@@ -18,7 +20,9 @@
     "eslint-config-node": "^4.0.0",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.5",
-    "nodemon": "^2.0.4"
+    "jest": "^26.0.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -31,7 +35,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.15",
     "multer": "^1.4.2",
-    "nanoid": "^3.1.9",
     "nodemailer": "^6.4.6",
     "swagger-ui-express": "^4.1.4"
   }
