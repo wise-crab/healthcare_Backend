@@ -40,13 +40,13 @@ function decodeHeader(req) {
 const check = {
   admin(req) {
     const decoded = decodeHeader(req);
-    if (decoded.data.rol !== 'admin') {
+    if (decoded.payload.rol !== 'admin') {
       throw error('You can not do that', 401);
     }
   },
   rol(req) {
     const decoded = decodeHeader(req);
-    const userRol = decoded.data.rol;
+    const userRol = decoded.payload.rol;
     if (userRol !== 'admin' && userRol !== 'medic' && userRol !== 'bacteriologist') {
       throw error('You can not do that', 401);
     }
