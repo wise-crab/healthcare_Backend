@@ -21,7 +21,6 @@ module.exports = (injectedStore) => {
   }
 
   async function upsert(body) {
-    const datetime = new Date();
     const typeExam = {
       name: body.name,
       registrationDate: new Date(),

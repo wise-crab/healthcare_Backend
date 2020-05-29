@@ -26,7 +26,7 @@ function get(req, res) {
 }
 
 function upsert(req, res, next) {
-  const typeExam = Controller.upsert(req.body)
+  Controller.upsert(req.body)
     .then((exam) => {
       response.success(req, res, exam, 201);
     })
