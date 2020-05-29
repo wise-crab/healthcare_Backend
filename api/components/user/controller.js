@@ -127,8 +127,8 @@ module.exports = (injectedStore) => {
 
     user.idAuth = authId;
 
-    store.addUser(TABLE, user);
-
+    const addUser = store.addUser(TABLE, user);
+    return addUser;
   }
 
   async function addUsersCsv(file) {
