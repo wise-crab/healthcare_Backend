@@ -3,7 +3,8 @@ const config = require('../config');
 const UserModel = require('../api/components/user/model');
 const AuthModel = require('../api/components/auth/model');
 const TypeExamsModel = require('../api/components/typesExams/model');
-const examsModel = require('../api/components/exams/model');
+const ExamsModel = require('../api/components/exams/model');
+const NotificationsModel = require('../api/components/notifications/model');
 
 db.Promise = global.Promise;
 
@@ -95,6 +96,16 @@ async function upsert(table, data) {
       const typeExam = new TypeExamsModel(data);
       typeExam.save();
     }
+  }
+
+  if (table === 'exams') {
+    const exam = new ExamsModel(data);
+    exam.save();
+  }
+
+  if (table === 'notifications') {
+    const notifications = new NotificationsModel(data);
+    notifications.save();
   }
 
   return null;
