@@ -151,7 +151,33 @@ module.exports = (injectedStore) => {
     if (!id || !data) {
       throw new Error('Invalid data');
     }
-    const result = await store.updateUser(id, data);
+    const { numberId, name, lastName, email, contactNumber, rol } = data;
+    const updateData = {};
+    if (numberId !== '') {
+      updateData.numberId = numberId;
+      updateData.numberId;
+    }
+    if (name !== '') {
+      updateData.name = name;
+      updateData.name;
+    }
+    if (lastName !== '') {
+      updateData.lastName = lastName;
+      updateData.lastName;
+    }
+    if (email !== '') {
+      updateData.email = email;
+      updateData.email;
+    }
+    if (contactNumber !== '') {
+      updateData.contactNumber = contactNumber;
+      updateData.contactNumber;
+    }
+    if (rol !== '') {
+      updateData.rol = rol;
+      updateData.rol;
+    }
+    const result = await store.updateUser(id, updateData);
     return result;
   }
 

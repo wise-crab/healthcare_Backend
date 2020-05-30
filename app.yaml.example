@@ -1,0 +1,14 @@
+runtime: nodejs12
+
+env_variables:
+  NODE_ENV: environment
+  HOST: host
+  PORT: number
+  JWT_SECRET: key
+  EMAIL_SERVICE: gmail
+  EMAIL_USER: mail@mail.com
+  EMAIL_PASSWORD: password
+  DATABASE_USER_DEV: user
+  DATABASE_PASS_DEV: pass
+  DATABASE_HOST: host
+  DATABASE_NAME: name

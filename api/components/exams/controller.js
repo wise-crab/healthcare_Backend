@@ -1,7 +1,5 @@
 const TABLE = 'exams';
 
-const ObjectId = require('mongodb').ObjectID;
-
 module.exports = (injectedStore) => {
   let store = injectedStore;
 
@@ -19,26 +17,34 @@ module.exports = (injectedStore) => {
     return exam;
   }
 
-  async function upsert(body) {
+  async function insert(body) {
     const exam = {
-      name: body.name,
+      idPatient: body.idPatient,
+      idMedic: body.idMedic,
       registrationDate: new Date(),
+      typeOfExam: body.typeOfExam,
+      status: 'ordered',
+      deleted: false,
     };
 
-    if (body._id) {
-      exam._id = body._id;
-      exam.deleted = body.deleted;
-    } else {
-      exam.deleted = false;
-      exam._id = new ObjectId();
-    }
-
     return store.upsert(TABLE, exam);
+  }
+
+  async function query(user, id) {
+    if (user === 'patient') {
+      const exams = await store.query(TABLE, id);
+      return exams;
+    }
+    if (user === 'bacteriologist') {
+      const exams = await store.query(TABLE);
+      return exams;
+    }
   }
 
   return {
     list,
     get,
-    upsert,
+    insert,
+    query,
   };
 };

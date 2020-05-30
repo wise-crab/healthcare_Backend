@@ -3,7 +3,8 @@ const config = require('../config');
 const UserModel = require('../api/components/user/model');
 const AuthModel = require('../api/components/auth/model');
 const TypeExamsModel = require('../api/components/typesExams/model');
-const examsModel = require('../api/components/exams/model');
+const ExamsModel = require('../api/components/exams/model');
+const NotificationsModel = require('../api/components/notifications/model');
 
 db.Promise = global.Promise;
 
@@ -24,7 +25,7 @@ async function list(table) {
     return typeExams;
   }
   if (table === 'exams') {
-    const exams = examsModel.find();
+    const exams = ExamsModel.find();
     return exams;
   }
 
@@ -77,7 +78,7 @@ async function get(table, id) {
     return exam;
   }
   if (table === 'exams') {
-    const exam = examsModel.findOne({ _id: id });
+    const exam = ExamsModel.findOne({ _id: id });
     return exam;
   }
   return null;
@@ -98,7 +99,33 @@ async function upsert(table, data) {
     }
   }
 
+  if (table === 'exams') {
+    const exam = new ExamsModel(data);
+    exam.save();
+  }
+
+  if (table === 'notifications') {
+    const notifications = new NotificationsModel(data);
+    notifications.save();
+  }
+
   return null;
+}
+
+async function query(table, id) {
+  if (table === 'exams') {
+    if (id) {
+      const exams = ExamsModel.find({ idPatient: id, deleted: false });
+      return exams;
+    }
+
+    const exams = ExamsModel.find({ status: 'ordered' });
+    return exams;
+
+  }
+
+  return null;
+
 }
 
 module.exports = {
@@ -110,4 +137,5 @@ module.exports = {
   login,
   get,
   upsert,
+  query,
 };
