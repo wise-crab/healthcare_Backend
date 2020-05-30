@@ -1,4 +1,3 @@
-
 const testServer = require('../../__mocks__/testserver');
 
 describe('routes - auth', () => {
@@ -16,4 +15,3 @@ describe('routes - auth', () => {
     });
   });
 });
-

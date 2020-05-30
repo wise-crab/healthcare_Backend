@@ -22,5 +22,7 @@ app.use(auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.listen(config.api.port, () => {
-  process.stdout.write(`App listening at ${config.api.host}:${config.api.port} \n`);
+  process.stdout.write(
+    `App listening at ${config.api.host}:${config.api.port} \n`,
+  );
 });

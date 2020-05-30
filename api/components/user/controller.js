@@ -26,7 +26,7 @@ module.exports = (injectedStore) => {
     }
     const usersRol = await store.getUsers(filterUsers);
     return usersRol;
-  };
+  }
 
   async function getUser({ document, name }) {
     if (!document && !name) {
@@ -45,11 +45,17 @@ module.exports = (injectedStore) => {
       const user = await store.getUser('name', name.toLowerCase());
       return user;
     }
-
   }
 
   async function addUser(body) {
-    if (!body.numberId || !body.name || !body.lastName || !body.email || !body.contactNumber || !body.rol) {
+    if (
+      !body.numberId ||
+      !body.name ||
+      !body.lastName ||
+      !body.email ||
+      !body.contactNumber ||
+      !body.rol
+    ) {
       throw new Error('Invalid data');
     }
     const user = {
@@ -71,7 +77,7 @@ module.exports = (injectedStore) => {
       users.forEach((element) => userNames.push(element.userName));
       for (let i = 0; i < userNames.length; i++) {
         if (userName === userNames[i]) {
-          const random = () => Math.floor(Math.random() * (9));
+          const random = () => Math.floor(Math.random() * 9);
           numbers = `${random()}${random()}${random()}${random()}`;
           userName = `${user.name}.${user.lastName}.${numbers}`;
           return userName;
@@ -81,7 +87,6 @@ module.exports = (injectedStore) => {
     }
 
     async function sendEmail(email, userName, password) {
-
       const transporter = nodemailer.createTransport({
         service: `${config.email.service}`,
         auth: {
@@ -90,21 +95,24 @@ module.exports = (injectedStore) => {
         },
       });
 
-      const info = await transporter.sendMail({
-        from: `${config.email.user}`,
-        to: email,
-        subject: 'Information',
-        text: `
+      const info = await transporter.sendMail(
+        {
+          from: `${config.email.user}`,
+          to: email,
+          subject: 'Information',
+          text: `
         userName: ${userName}
         password: ${password}
         `,
-      }, (error, info) => {
-        if (error) {
-          console.error(error);
-        } else {
-          process.stdout.write(`Email sent: ${info.response}\n`);
-        }
-      });
+        },
+        (error, info) => {
+          if (error) {
+            console.error(error);
+          } else {
+            process.stdout.write(`Email sent: ${info.response}\n`);
+          }
+        },
+      );
 
       return info;
     }
