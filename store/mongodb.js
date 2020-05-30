@@ -25,7 +25,7 @@ async function list(table) {
     return typeExams;
   }
   if (table === 'exams') {
-    const exams = examsModel.find();
+    const exams = ExamsModel.find();
     return exams;
   }
 
@@ -77,7 +77,7 @@ async function get(table, id) {
     return exam;
   }
   if (table === 'exams') {
-    const exam = examsModel.findOne({ _id: id });
+    const exam = ExamsModel.findOne({ _id: id });
     return exam;
   }
   return null;
@@ -111,6 +111,22 @@ async function upsert(table, data) {
   return null;
 }
 
+async function query(table, id) {
+  if (table === 'exams') {
+    if (id) {
+      const exams = ExamsModel.find({ idPatient: id, deleted: false });
+      return exams;
+    }
+
+    const exams = ExamsModel.find({ status: 'ordered' });
+    return exams;
+
+  }
+
+  return null;
+
+}
+
 module.exports = {
   list,
   addUser,
@@ -120,4 +136,5 @@ module.exports = {
   login,
   get,
   upsert,
+  query,
 };

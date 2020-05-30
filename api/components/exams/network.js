@@ -44,8 +44,22 @@ function insert(req, res, next) {
     .catch(next);
 }
 
+function query(req, res) {
+  const { user } = req.query;
+  const { id } = req.query;
+
+  Controller.query(user, id)
+    .then((list) => {
+      response.success(req, res, list, 200);
+    })
+    .catch((error) => {
+      response.error(req, res, error.message, 500);
+    });
+}
+
 router.get('/exams', /*secure('rolSearch'),*/ list);
 router.get('/exams/:id', /*secure('rolSearch'),*/ get);
+router.get('/exams-query', /*secure('rolSearch'),*/ query);
 router.post('/exams', /*secure('rolSearch'),*/ insert);
 
 module.exports = router;

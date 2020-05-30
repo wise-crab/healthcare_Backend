@@ -31,9 +31,21 @@ module.exports = (injectedStore) => {
     return store.upsert(TABLE, exam);
   }
 
+  async function query(user, id) {
+    if (user === 'patient') {
+      const exams = await store.query(TABLE, id);
+      return exams;
+    }
+    if (user === 'bacteriologist') {
+      const exams = await store.query(TABLE);
+      return exams;
+    }
+  }
+
   return {
     list,
     get,
     insert,
+    query,
   };
 };
