@@ -9,7 +9,6 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "format": "prettier --write '{*.js,api/**/**/*.{js,jsx}}'",
     "lint": "eslint . --fix"
   },
   "author": "wise-crab",
@@ -22,9 +21,7 @@
     "eslint-plugin-import": "^2.20.2",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
-    "lint-staged": "^10.2.7",
     "nodemon": "^2.0.4",
-    "prettier": "^2.0.5",
     "supertest": "^4.0.2"
   },
   "dependencies": {
@@ -40,17 +37,5 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.4.6",
     "swagger-ui-express": "^4.1.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "npm run format",
-      "npm run lint",
-      "git add"
-    ]
   }
 }
