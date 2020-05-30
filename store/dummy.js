@@ -6,7 +6,7 @@ const db = {
       name: 'Pedro',
       lastName: 'Goméz',
       email: 'pedro@gmail.com',
-      phone: 314685940,
+      contactNumber: 314685940,
       username: 'luis.parra.1661',
       rol: 'admin',
       deleted: false,
@@ -17,7 +17,7 @@ const db = {
       name: 'Juan',
       lastName: 'Rodriguez',
       email: 'juan@gmail.com',
-      phone: 315685940,
+      contactNumber: 315685940,
       username: 'juanito',
       rol: 'medic',
       deleted: false,
@@ -28,7 +28,7 @@ const db = {
       name: 'Andres',
       lastName: 'Suarez',
       email: 'andres@gmail.com',
-      phone: 316585940,
+      contactNumber: 316585940,
       username: 'andreses',
       rol: 'bacteriologist',
       deleted: false,
@@ -39,7 +39,7 @@ const db = {
       name: 'Paula',
       lastName: 'Silva',
       email: 'paula@gmail.com',
-      phone: 3154549216,
+      contactNumber: 3154549216,
       username: 'paulaaa',
       rol: 'patient',
       deleted: false,
@@ -50,7 +50,7 @@ const db = {
       name: 'Raul',
       lastName: 'Silva',
       email: 'raul@gmail.com',
-      phone: 3154549216,
+      contactNumber: 3154549216,
       username: 'raulll',
       rol: 'medic',
       deleted: false,
@@ -61,7 +61,7 @@ const db = {
       name: 'luis',
       lastName: 'parra',
       email: 'luis@gmail.com',
-      phone: '3145888791',
+      contactNumber: '3145888791',
       rol: 'admin',
       deleted: false,
       username: 'luis.parra.1564',
@@ -72,7 +72,7 @@ const db = {
       id: 'y_8-e_lXKGTff8MxcTbPb',
       username: 'luis.parra.1564',
       rol: 'admin',
-      password: '$2b$05$7Sh8lEj376zKoBPOswk03.au9T1bL.xAHXlf6xpgcxJ3axoxvnh.y',
+      password: '$2b$05$AAMe5oi7Hun53aMdeZhUNuE0cU1seesVW2RKrj.n4hrkvRBlXPyWW',
     },
   ],
 };
@@ -81,44 +81,50 @@ async function list(table) {
   return db[table] || [];
 }
 
-async function getUsers(table, filterUsers) {
+async function getUsers(filterUsers, table = 'users') {
   const col = await list(table);
   const result = col.filter((item) => item.rol === filterUsers);
   return result;
 }
 
-async function getUser(table, numberId) {
+async function getUser(data = 'document', numberId, table = 'users') {
   const col = await list(table);
   return col.filter((item) => item.numberId === numberId) || null;
 }
 
-async function addUser(table, user) {
+async function addUser(table = 'users', user) {
   if (!db[table]) {
     db[table] = [];
   }
   db[table].push(user);
+  return user;
 }
 
 async function updateUser(document, data) {
-  const user = await getUser(document);
+  const newUser = {
+    numberId: data.numberId,
+    name: data.name,
+    lastName: data.lastName,
+    email: data.email,
+    contactNumber: data.contactNumber,
+    userName: data.userName,
+    rol: data.rol,
+    deleted: data.deleted,
+  };
 
-  user.numberId = data.numberId;
-  user.name = data.name;
-  user.lastName = data.lastName;
-  user.email = data.email;
-  user.phone = data.phone;
-  user.rol = data.rol;
-  user.deleted = data.deleted;
-
-  return true;
+  return newUser;
 }
 
-async function query(table, q) {
+async function query(q, table = 'users') {
   const col = await list(table);
   const keys = Object.keys(q);
   const key = keys[0];
 
   return col.filter((item) => item[key] === q[key])[0] || null;
+}
+
+async function login(username) {
+  return db.auth[0];
 }
 
 module.exports = {
@@ -128,4 +134,5 @@ module.exports = {
   addUser,
   updateUser,
   query,
+  login,
 };

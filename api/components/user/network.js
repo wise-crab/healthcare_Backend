@@ -1,14 +1,9 @@
 const express = require('express');
-const multer = require('multer');
 const response = require('../../../network/response');
 const Controller = require('./index');
 const secure = require('./secure');
 
 const router = express.Router();
-
-const upload = multer({
-  dest: 'public/files/',
-});
 
 function list(req, res) {
   Controller.list()
@@ -78,7 +73,7 @@ router.get('/users', secure('globalSearch'), list);
 router.get('/users-rol', secure('rolSearch'), getUsersByRol);
 router.get('/users/user', secure('userSearch'), getUser);
 router.post('/users', secure('createUser'), addUser);
-router.post('/users-csv', secure('createUser'), upload.single('file'), addUsersCsv);
+router.post('/users-csv', secure('createUser'), addUsersCsv);
 router.put('/users/:id', secure('updateUser'), update);
 
 module.exports = router;
