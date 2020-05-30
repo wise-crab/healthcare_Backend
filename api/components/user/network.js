@@ -48,7 +48,7 @@ function addUser(req, res) {
     });
 }
 function addUsersCsv(req, res) {
-  Controller.addUsersCsv(req.file)
+  Controller.addUsersCsv(req.body.users)
     .then(() => {
       response.success(req, res, 'users created', 201);
     })
@@ -73,7 +73,7 @@ router.get('/users', secure('globalSearch'), list);
 router.get('/users-rol', secure('rolSearch'), getUsersByRol);
 router.get('/users/user', secure('userSearch'), getUser);
 router.post('/users', secure('createUser'), addUser);
-router.post('/users-csv', secure('createUser'), addUsersCsv);
+router.post('/users-csv', addUsersCsv);
 router.put('/users/:id', secure('updateUser'), update);
 
 module.exports = router;

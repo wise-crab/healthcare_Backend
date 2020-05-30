@@ -2,6 +2,8 @@ const db = require('mongoose');
 const config = require('../config');
 const UserModel = require('../api/components/user/model');
 const AuthModel = require('../api/components/auth/model');
+const TypeExamsModel = require('../api/components/typesExams/model');
+const examsModel = require('../api/components/exams/model');
 
 db.Promise = global.Promise;
 
@@ -17,9 +19,16 @@ async function list(table) {
     const users = UserModel.find();
     return users;
   }
+  if (table === 'typesexams') {
+    const typeExams = TypeExamsModel.find();
+    return typeExams;
+  }
+  if (table === 'exams') {
+    const exams = examsModel.find();
+    return exams;
+  }
 
   return null;
-
 }
 
 async function addUser(table, user) {
@@ -62,6 +71,36 @@ async function login(username) {
   return data;
 }
 
+async function get(table, id) {
+  if (table === 'typesexams') {
+    const exam = TypeExamsModel.findOne({ _id: id });
+    return exam;
+  }
+  if (table === 'exams') {
+    const exam = examsModel.findOne({ _id: id });
+    return exam;
+  }
+  return null;
+}
+
+async function upsert(table, data) {
+  // data._id = data.id;
+
+  if (table === 'typesexams') {
+    const exist = await TypeExamsModel.findOne({ _id: data._id });
+    if (exist) {
+      exist.update(data, (err) => {
+        if (err) console.error(err);
+      });
+    } else {
+      const typeExam = new TypeExamsModel(data);
+      typeExam.save();
+    }
+  }
+
+  return null;
+}
+
 module.exports = {
   list,
   addUser,
@@ -69,4 +108,6 @@ module.exports = {
   getUser,
   updateUser,
   login,
+  get,
+  upsert,
 };
