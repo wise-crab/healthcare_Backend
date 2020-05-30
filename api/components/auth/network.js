@@ -13,7 +13,7 @@ function login(req, res) {
     .catch((error) => {
       response.error(req, res, error.message, 401);
     });
-};
+}
 
 router.post('/login', login);
 

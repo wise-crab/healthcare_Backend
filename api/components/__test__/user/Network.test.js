@@ -6,10 +6,7 @@ describe('routes - users', () => {
   const request = testServer(network);
   describe('GET /users', () => {
     test('should respond with status 200', (done) => {
-      request
-        .get('/users')
-        .auth(token, { type: 'bearer' })
-        .expect(200, done);
+      request.get('/users').auth(token, { type: 'bearer' }).expect(200, done);
     });
   });
   describe('GET /users-rol', () => {
@@ -71,4 +68,3 @@ describe('routes - users', () => {
     });
   });
 });
-

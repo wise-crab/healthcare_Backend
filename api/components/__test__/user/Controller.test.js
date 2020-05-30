@@ -21,7 +21,6 @@ const userResult = {
   rol: 'medic',
   userName: 'andrea.lopez.1456',
   deleted: false,
-
 };
 const updateUser = {
   numberId: 1018071456,
@@ -35,36 +34,29 @@ const updateUser = {
 };
 
 describe('controller - user', () => {
-
   test('should return list of user', async () => {
-    return Controller.list()
-      .then((user) => {
-        expect(user).toStrictEqual(usersMock);
-      });
+    return Controller.list().then((user) => {
+      expect(user).toStrictEqual(usersMock);
+    });
   });
   test('should return users by rol', async () => {
-    return Controller.getUsers('patient')
-      .then((user) => {
-        expect(user).toStrictEqual([usersMock[3]]);
-      });
+    return Controller.getUsers('patient').then((user) => {
+      expect(user).toStrictEqual([usersMock[3]]);
+    });
   });
   test('should return an user', async () => {
-    return Controller.getUser({ document: '1018071456' })
-      .then((user) => {
-        expect(user).toStrictEqual([usersMock[0]]);
-      });
+    return Controller.getUser({ document: '1018071456' }).then((user) => {
+      expect(user).toStrictEqual([usersMock[0]]);
+    });
   });
   test('should return add user', async () => {
-    return Controller.addUser(newUser)
-      .then((user) => {
-        expect(user).toStrictEqual(userResult);
-      });
+    return Controller.addUser(newUser).then((user) => {
+      expect(user).toStrictEqual(userResult);
+    });
   });
   test('should return update user', async () => {
-    return Controller.update('1018071456', updateUser)
-      .then((user) => {
-        expect(user).toStrictEqual(userResult);
-      });
+    return Controller.update('1018071456', updateUser).then((user) => {
+      expect(user).toStrictEqual(userResult);
+    });
   });
-
 });
