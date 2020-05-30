@@ -56,8 +56,10 @@ async function updateUser(id, data) {
 }
 
 async function login(username) {
-  const user = await AuthModel.findOne({ userName: username });
-  return user;
+  const authUser = await AuthModel.findOne({ userName: username });
+  const user = await UserModel.findOne({ userName: username });
+  const data = { authUser, user };
+  return data;
 }
 
 module.exports = {

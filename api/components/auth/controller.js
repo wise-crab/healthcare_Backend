@@ -17,14 +17,27 @@ module.exports = function (injectedStore) {
     if (!data) {
       throw new Error('Invalid Information');
     }
-    return bcrypt.compare(password, data.password)
+    return bcrypt.compare(password, data.authUser.password)
       .then((equals) => {
         if (equals === true) {
-          const token = auth.sign({ data });
-          const userRol = data.rol;
+          const { authUser } = data;
+          const payload = {
+            userName: authUser.userName,
+            rol: authUser.rol,
+          };
+          const token = auth.sign({ payload });
+          const { user } = data;
           const response = {
             token,
-            userRol,
+            userData: {
+              id: user._id,
+              numberId: user.numberId,
+              name: user.name,
+              lastName: user.lastName,
+              email: user.email,
+              contactNumber: user.contactNumber,
+              rol: user.rol,
+            },
           };
           return response;
         }
