@@ -140,7 +140,7 @@ router.post('/exams', secure('addExam'), insert);
 router.put('/exams', secure('addExam'), insert);
 router.post(
   '/upload-exam',
-  /*secure('addExam'),*/ multer.single('file'),
+  secure('staff'), multer.single('file'),
   upload,
 );
 
