@@ -71,7 +71,7 @@ const check = {
     if (userRol !== 'doctor' && userRol !== 'bacteriologist' && userRol !== 'patient') {
       throw error('You can not do that', 401);
     }
-  }
+  },
 };
 
 module.exports = {
