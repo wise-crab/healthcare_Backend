@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const examsSchema = new Schema({
   idPatient: mongoose.ObjectId,
   idBacteriologist: mongoose.ObjectId,
-  idMedic: mongoose.ObjectId,
+  idDoctor: mongoose.ObjectId,
   registrationDate: Date,
   typeOfExam: String,
   status: String,
