@@ -2,7 +2,7 @@ const express = require('express');
 const response = require('../../../network/response');
 const Controller = require('./index');
 const notificationsController = require('../notifications/index');
-// const secure = require('./secure');
+const secure = require('./secure');
 
 const router = express.Router();
 
@@ -57,9 +57,9 @@ function query(req, res) {
     });
 }
 
-router.get('/exams', /*secure('rolSearch'),*/ list);
-router.get('/exams/:id', /*secure('rolSearch'),*/ get);
-router.get('/exams-query', /*secure('rolSearch'),*/ query);
-router.post('/exams', /*secure('rolSearch'),*/ insert);
+router.get('/exams', secure('globalSearch'), list);
+router.get('/exams/:id', secure('staff'), get);
+router.get('/exams-query', secure('public'), query);
+router.post('/exams', secure('addExam'), insert);
 
 module.exports = router;

@@ -20,7 +20,7 @@ module.exports = (injectedStore) => {
   async function insert(body) {
     const exam = {
       idPatient: body.idPatient,
-      idMedic: body.idMedic,
+      idMedic: body.idDoctor,
       registrationDate: new Date(),
       typeOfExam: body.typeOfExam,
       status: 'ordered',
