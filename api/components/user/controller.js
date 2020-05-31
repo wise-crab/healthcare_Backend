@@ -1,6 +1,4 @@
 // const { nanoid } = require('nanoid');
-const fs = require('fs').promises;
-const parse = require('csv-parse/lib/sync');
 const generator = require('generate-password');
 const nodemailer = require('nodemailer');
 const config = require('../../../config');
@@ -139,13 +137,8 @@ module.exports = (injectedStore) => {
     return addUser;
   }
 
-  async function addUsersCsv(file) {
-    if (!file) {
-      throw new Error('There is not file');
-    }
-    const content = await fs.readFile(`${file.path}`);
-    const records = parse(content, { columns: true });
-    records.forEach((element) => {
+  async function addUsersCsv(users) {
+    users.forEach((element) => {
       const user = element;
       user.numberId = parseInt(user.numberId, 10);
       user.phone = parseInt(user.phone, 10);

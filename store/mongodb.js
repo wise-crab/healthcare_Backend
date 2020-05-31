@@ -30,7 +30,6 @@ async function list(table) {
   }
 
   return null;
-
 }
 
 async function addUser(table, user) {

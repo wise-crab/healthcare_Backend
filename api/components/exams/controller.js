@@ -1,4 +1,3 @@
-
 const TABLE = 'exams';
 
 module.exports = (injectedStore) => {

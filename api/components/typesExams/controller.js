@@ -1,4 +1,3 @@
-
 const TABLE = 'typesexams';
 
 const ObjectId = require('mongodb').ObjectID;
