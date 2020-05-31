@@ -11,6 +11,7 @@ const examsSchema = new Schema({
   status: String,
   deleted: Boolean,
   resultsDate: Date,
+  result: String,
 });
 
 const examModel = mongoose.model('exams', examsSchema);

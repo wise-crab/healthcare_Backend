@@ -17,15 +17,31 @@ module.exports = (injectedStore) => {
     return exam;
   }
 
-  async function insert(body) {
+  async function upsert(body) {
+    if (body.result) {
+      const exam = {
+        _id: body.idExam,
+        result: body.result,
+        registrationDate: new Date(),
+        status: 'available',
+      };
+      return store.upsert(TABLE, exam);
+    }
+
     const exam = {
       idPatient: body.idPatient,
       idMedic: body.idDoctor,
       registrationDate: new Date(),
       typeOfExam: body.typeOfExam,
-      status: 'ordered',
+      status: 'pending',
       deleted: false,
     };
+
+    if (body._id) {
+      exam._id = body._id;
+      exam.idBacteriologist = body.idBacteriologist;
+      exam.status = body.status;
+    }
 
     return store.upsert(TABLE, exam);
   }
@@ -44,7 +60,7 @@ module.exports = (injectedStore) => {
   return {
     list,
     get,
-    insert,
+    upsert,
     query,
   };
 };

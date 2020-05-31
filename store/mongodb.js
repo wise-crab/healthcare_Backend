@@ -100,8 +100,15 @@ async function upsert(table, data) {
   }
 
   if (table === 'exams') {
-    const exam = new ExamsModel(data);
-    exam.save();
+    const exist = await ExamsModel.findOne({ _id: data._id });
+    if (exist) {
+      exist.updateOne(data, (err) => {
+        if (err) console.error(err);
+      });
+    } else {
+      const exam = new ExamsModel(data);
+      exam.save();
+    }
   }
 
   if (table === 'notifications') {
@@ -119,13 +126,11 @@ async function query(table, id) {
       return exams;
     }
 
-    const exams = ExamsModel.find({ status: 'ordered' });
+    const exams = ExamsModel.find({ status: { $ne: 'available' } });
     return exams;
-
   }
 
   return null;
-
 }
 
 module.exports = {

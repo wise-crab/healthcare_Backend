@@ -19,4 +19,7 @@ module.exports = {
     host: process.env.DATABASE_HOST,
     name: process.env.DATABASE_NAME,
   },
+  bucket: {
+    name: process.env.GCLOUD_STORAGE_BUCKET,
+  },
 };
