@@ -57,7 +57,7 @@ const db = {
     },
     {
       id: 'y_8-e_lXKGTff8MxcTbPb',
-      numberId: 1019071661,
+      numberId: 1018071561,
       name: 'luis',
       lastName: 'parra',
       email: 'luis@gmail.com',
@@ -69,10 +69,21 @@ const db = {
   ],
   'auth': [
     {
-      id: 'y_8-e_lXKGTff8MxcTbPb',
-      username: 'luis.parra.1564',
-      rol: 'admin',
-      password: '$2b$05$AAMe5oi7Hun53aMdeZhUNuE0cU1seesVW2RKrj.n4hrkvRBlXPyWW',
+      'authUser': {
+        id: 'y_8-e_lXKGTff8MxcTbPb',
+        username: 'luis.parra.1564',
+        rol: 'admin',
+        password: '$2b$05$AAMe5oi7Hun53aMdeZhUNuE0cU1seesVW2RKrj.n4hrkvRBlXPyWW',
+      },
+      'user': {
+        _id: 'y_8-e_lXKGTff8MxcTbPb',
+        numberId: 1018071561,
+        name: 'luis',
+        lastName: 'parra',
+        email: 'luis@gmail.com',
+        contactNumber: '3145888791',
+        rol: 'admin',
+      },
     },
   ],
 };
@@ -107,9 +118,7 @@ async function updateUser(document, data) {
     lastName: data.lastName,
     email: data.email,
     contactNumber: data.contactNumber,
-    userName: data.userName,
     rol: data.rol,
-    deleted: data.deleted,
   };
 
   return newUser;
