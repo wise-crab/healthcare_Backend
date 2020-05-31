@@ -1,7 +1,7 @@
 const express = require('express');
 const response = require('../../../network/response');
 const Controller = require('./index');
-// const secure = require('./secure');
+const secure = require('./secure');
 
 const router = express.Router();
 
@@ -33,9 +33,9 @@ function upsert(req, res, next) {
     .catch(next);
 }
 
-router.get('/types-exams', /*secure('rolSearch'),*/ list);
-router.get('/types-exams/:id', /*secure('rolSearch'),*/ get);
-router.post('/types-exams', /*secure('rolSearch'),*/ upsert);
-router.put('/types-exams', /*secure('rolSearch'),*/ upsert);
+router.get('/types-exams', secure('globalSearch'), list);
+router.get('/types-exams/:id', secure('globalSearch'), get);
+router.post('/types-exams', secure('createExam'), upsert);
+router.put('/types-exams', secure('updateExam'), upsert);
 
 module.exports = router;

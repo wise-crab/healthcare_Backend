@@ -47,7 +47,28 @@ const check = {
   rol(req) {
     const decoded = decodeHeader(req);
     const userRol = decoded.payload.rol;
-    if (userRol !== 'admin' && userRol !== 'medic' && userRol !== 'bacteriologist') {
+    if (userRol !== 'admin' && userRol !== 'doctor' && userRol !== 'bacteriologist') {
+      throw error('You can not do that', 401);
+    }
+  },
+  doctor(req) {
+    const decoded = decodeHeader(req);
+    const userRol = decoded.payload.rol;
+    if (userRol !== 'doctor') {
+      throw error('You can not do that', 401);
+    }
+  },
+  staff(req) {
+    const decoded = decodeHeader(req);
+    const userRol = decoded.payload.rol;
+    if (userRol !== 'doctor' && userRol !== 'bacteriologist') {
+      throw error('You can not do that', 401);
+    }
+  },
+  user(req) {
+    const decoded = decodeHeader(req);
+    const userRol = decoded.payload.rol;
+    if (userRol !== 'doctor' && userRol !== 'bacteriologist' && userRol !== 'patient') {
       throw error('You can not do that', 401);
     }
   },

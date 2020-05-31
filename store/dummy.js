@@ -19,7 +19,7 @@ const db = {
       email: 'juan@gmail.com',
       contactNumber: 315685940,
       username: 'juanito',
-      rol: 'medic',
+      rol: 'doctor',
       deleted: false,
     },
     {
@@ -52,7 +52,7 @@ const db = {
       email: 'raul@gmail.com',
       contactNumber: 3154549216,
       username: 'raulll',
-      rol: 'medic',
+      rol: 'doctor',
       deleted: false,
     },
     {

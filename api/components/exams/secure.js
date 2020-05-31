@@ -4,32 +4,27 @@ module.exports = function checkAuth(action) {
   function middleware(req, res, next) {
     switch (action) {
       case 'globalSearch':
-        auth.check.admin(req);
+        auth.check.doctor(req);
         next();
         break;
 
-      case 'rolSearch':
-        auth.check.rol(req);
+      case 'examSearch':
+        auth.check.doctor(req);
         next();
         break;
 
-      case 'createUser':
-        auth.check.admin(req);
+      case 'addExam':
+        auth.check.doctor(req);
         next();
         break;
 
-      case 'updateUser':
-        auth.check.admin(req);
+      case 'staff':
+        auth.check.staff(req);
         next();
         break;
 
-      case 'deletedUser':
-        auth.check.admin(req);
-        next();
-        break;
-
-      case 'userSearch':
-        auth.check.rol(req);
+      case 'public':
+        auth.check.user(req);
         next();
         break;
 
