@@ -1,4 +1,3 @@
-
 const TABLE = 'exams';
 
 module.exports = (injectedStore) => {
@@ -18,15 +17,21 @@ module.exports = (injectedStore) => {
     return exam;
   }
 
-  async function insert(body) {
+  async function upsert(body) {
     const exam = {
       idPatient: body.idPatient,
       idMedic: body.idDoctor,
       registrationDate: new Date(),
       typeOfExam: body.typeOfExam,
-      status: 'ordered',
+      status: 'pending',
       deleted: false,
     };
+
+    if (body._id) {
+      exam._id = body._id;
+      exam.idBacteriologist = body.idBacteriologist;
+      exam.status = body.status;
+    }
 
     return store.upsert(TABLE, exam);
   }
@@ -45,7 +50,7 @@ module.exports = (injectedStore) => {
   return {
     list,
     get,
-    insert,
+    upsert,
     query,
   };
 };

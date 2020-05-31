@@ -28,11 +28,23 @@ function get(req, res) {
 
 function insert(req, res, next) {
   if (req.body._id) {
-
-  } else {
-    Controller.insert(req.body)
+    Controller.upsert(req.body)
       .then((exam) => {
+        const dataNotification = {
+          idPatient: req.body.idPatient,
+          dateOfNotification: new Date(),
+          status: true,
+          message: 'Realizando exámen',
+        };
 
+        notificationsController.upsert(dataNotification);
+
+        return response.success(req, res, exam, 201);
+      })
+      .catch(next);
+  } else {
+    Controller.upsert(req.body)
+      .then((exam) => {
         const dataNotification = {
           idPatient: req.body.idPatient,
           dateOfNotification: new Date(),
@@ -65,6 +77,6 @@ router.get('/exams', secure('globalSearch'), list);
 router.get('/exams/:id', secure('staff'), get);
 router.get('/exams-query', secure('public'), query);
 router.post('/exams', secure('addExam'), insert);
-router.put('/exams', /*secure('addExam'),*/ insert);
+router.put('/exams', secure('addExam'), insert);
 
 module.exports = router;
