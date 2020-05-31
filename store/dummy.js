@@ -86,6 +86,27 @@ const db = {
       },
     },
   ],
+  'exams': [
+    {
+      _id: '1',
+      idPatient: '2',
+      idBacteriologist: '3',
+      idMedic: '4',
+      registrationDate: 'today',
+      typeofexam: 'head',
+      status: 'ordered',
+      deleted: false,
+      resultsDate: 'today',
+    },
+  ],
+  'typesexams': [
+    {
+      id: '1',
+      name: 'head',
+      registrationDate: 'today',
+      deleted: false,
+    },
+  ],
 };
 
 async function list(table) {
@@ -136,6 +157,39 @@ async function login(username) {
   return db.auth[0];
 }
 
+async function upsert(table, exam) {
+  if (table === 'typesexams') {
+    const newType = {
+      id: '2',
+      name: exam.name,
+      registrationDate: 'today',
+      deleted: false,
+    };
+    db[table].push(newType);
+    return newType;
+  }
+  const newExam = {
+    idMedic: exam.idMedic,
+    idPatient: exam.idPatient,
+    deleted: false,
+    registrationDate: 'today',
+    status: 'pending',
+    typeOfExam: 'head',
+  };
+  if (!db[table]) {
+    db[table] = [];
+  }
+  db[table].push(newExam);
+  return newExam;
+}
+
+async function get(table, id) {
+  if (table === 'typesexams') {
+    return [db.typesexams[0]];
+  }
+  return [db.exams[0]];
+}
+
 module.exports = {
   list,
   getUsers,
@@ -144,4 +198,6 @@ module.exports = {
   updateUser,
   query,
   login,
+  upsert,
+  get,
 };
