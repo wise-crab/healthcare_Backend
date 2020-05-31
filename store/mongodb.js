@@ -102,7 +102,7 @@ async function upsert(table, data) {
   if (table === 'exams') {
     const exist = await ExamsModel.findOne({ _id: data._id });
     if (exist) {
-      exist.update(data, (err) => {
+      exist.updateOne(data, (err) => {
         if (err) console.error(err);
       });
     } else {

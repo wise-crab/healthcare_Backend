@@ -9,6 +9,7 @@ const config = require('../config');
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const user = require('./components/user/network');
 const auth = require('./components/auth/network');

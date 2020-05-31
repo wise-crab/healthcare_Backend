@@ -18,6 +18,16 @@ module.exports = (injectedStore) => {
   }
 
   async function upsert(body) {
+    if (body.result) {
+      const exam = {
+        _id: body.idExam,
+        result: body.result,
+        registrationDate: new Date(),
+        status: 'available',
+      };
+      return store.upsert(TABLE, exam);
+    }
+
     const exam = {
       idPatient: body.idPatient,
       idMedic: body.idDoctor,
