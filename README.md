@@ -30,6 +30,6 @@ If you want to see the documentation, access to the route **/api-docs**
 
 (https://github.com/wise-crab/wise-crab.github.io)
 
-## questions
 
-More information about the current logged user
+## questions
+  More information about the current logged user
