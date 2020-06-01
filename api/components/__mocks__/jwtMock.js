@@ -1,0 +1,7 @@
+const token = {
+  admin: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InJvbCI6ImFkbWluIn0sImlhdCI6MTU5MDk1OTY5MH0.hA_NwXz41ldIcihTPuGMd4JOsl7NnxK4kzAn6IO2l5E',
+  doctor: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InJvbCI6ImRvY3RvciJ9LCJpYXQiOjE1OTA5NjE5NzF9.mhOngki2EAD2seBuF4_ONUzbCTU88a4ca2Fc6TyMZH8',
+  bacteriologist: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InJvbCI6ImJhY3RlcmlvbG9naXN0In0sImlhdCI6MTU5MDk2MjAyM30.Ew-y4X9kHfPUD8mUSxsU6CZH2XlbWGKQwAyHEbNINGg',
+};
+
+module.exports = token;
