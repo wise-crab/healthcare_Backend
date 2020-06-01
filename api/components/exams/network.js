@@ -3,6 +3,8 @@ const { format } = require('util');
 const Multer = require('multer');
 const { Storage } = require('@google-cloud/storage');
 
+const { socket } = require('../../../socket');
+
 const config = require('../../../config');
 
 const response = require('../../../network/response');
@@ -56,6 +58,8 @@ function insert(req, res, next) {
 
         notificationsController.upsert(dataNotification);
 
+        socket.io.emit('message', dataNotification);
+
         return response.success(req, res, exam, 201);
       })
       .catch(next);
@@ -70,6 +74,8 @@ function insert(req, res, next) {
         };
 
         notificationsController.upsert(dataNotification);
+
+        socket.io.emit('message', dataNotification);
 
         return response.success(req, res, exam, 201);
       })
