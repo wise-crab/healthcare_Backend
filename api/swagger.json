@@ -1,20 +1,21 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Healthcare is a management system of clinical laboratory tests that provides a track of your results.",
+    "description": "The Laboratory (bacteriologist) wants a proper channel where can have a straight flow of information among him and the Doctor with the patient supervision. Due to the fact that the laboratory is aware that the patient wants to have a track report of the process, the laboratory developed Examedic in order to satisfy its clients informing on real-time about when his result of exam is available and a proper track of their information.",
     "version": "1.0.0",
-    "title": "Healthcare Backend"
+    "title": "Examedic Backend"
   },
-  "host": "localhost:3000",
+  "host": "https://examedic.wl.r.appspot.com",
   "basePath": "/",
   "tags": [
     {
       "name": "user",
-      "description": "Operations about user"
+      "description": "This are a CRUD operation for the users this only can be do if your are an admin"
     }
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/login": {
@@ -192,22 +193,189 @@
           }
         }
       }
+    },
+    "/exams": {
+      "get": {
+        "tags": [
+          "Exams"
+        ],
+        "summary": "Global exams search",
+        "description": "This can only be done by and docto or bacteriologist.",
+        "operationId": "globalSearch",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Exams"
+        ],
+        "summary": "Add and Exam",
+        "description": "Create a jwt ",
+        "operationId": "addExams",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Exam"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Exams"
+        ],
+        "summary": "Update a Exam",
+        "description": "This can only be done by and doctor or bacteriologist",
+        "operationId": "updateExam",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update exam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Exam'"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/exams/:id": {
+      "put": {
+        "tags": [
+          "Exams"
+        ],
+        "summary": "Search an exam",
+        "description": "This can only be done by and Doctor",
+        "operationId": "searchExam",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Search exam",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/exams-query": {
+      "get": {
+        "tags": [
+          "Exams"
+        ],
+        "summary": "Exam by patient",
+        "description": "Create a JSON",
+        "operationId": "examByPatient",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Exam"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/types-exams": {
+      "post": {
+        "tags": [
+          "Types Exams"
+        ],
+        "summary": "Create a type of exam",
+        "description": "Create a jwt ",
+        "operationId": "createTypeExam",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Type-Exam"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/types-exams/:id": {
+      "put": {
+        "tags": [
+          "Types Exams"
+        ],
+        "summary": "Update a Type exam",
+        "description": "This can only be done by and Doctor",
+        "operationId": "updateTypeExam",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Update Type Exam",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Type-Exam"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
-    },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
+    "examedic_auth": {
+      "type": "bearer Token",
+      "authorizationUrl": "https://examedic.wl.r.appspot.com/login",
+      "flow": "Emplicit"
     }
   },
   "definitions": {
@@ -245,13 +413,24 @@
         }
       }
     },
-    "LoginResponse": {
+    "Exam": {
       "type": "object",
       "properties": {
-        "token": {
+        "idPatient": {
           "type": "string"
         },
-        "userRol": {
+        "idDoctor": {
+          "type": "string"
+        },
+        "typeOfExam": {
+          "type": "string"
+        }
+      }
+    },
+    "Type-Exam": {
+      "type": "object",
+      "properties": {
+        "name": {
           "type": "string"
         }
       }

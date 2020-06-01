@@ -5,7 +5,7 @@ const { Storage } = require('@google-cloud/storage');
 // const pdf = require('html-pdf');
 // const PDFDocument = require('pdfkit');
 // const base64Img = require('base64-img');
-const i2b = require('imageurl-base64');
+// const i2b = require('imageurl-base64');
 // const request = require('request').defaults({ encoding: null });
 const pdf = require('html-pdf');
 
@@ -205,50 +205,48 @@ function download(req, res, next) {
   //   }
   // });
 
-  let content = `
+  const content = `
   <h5>Resultado de examenes</h5>
   `;
 
-  const values = req.body.results;
-  console.log(values);
+  // const values = req.body.results;
 
-  const reee = values.map((element) => {
-    content += `<img src="${element}" width="500" height="500">`;
-    i2b(element, (err, data) => {
-      if (err) {
-        console.log(err);
-        return false;
-      }
-      // console.log(data.dataUri);
+  // const reee = values.map((element) => {
+  //   content += `<img src="${element}" width="500" height="500">`;
+  //   i2b(element, (err, data) => {
+  //     if (err) {
+  //       console.error(err);
+  //       return false;
+  //     }
+  //     // console.log(data.dataUri);
 
-      content += `<img src="${element}" width="500" height="500">`;
-      return content;
+  //     content += `<img src="${element}" width="500" height="500">`;
+  //     return content;
 
-      // console.log(content);
+  //     // console.log(content);
 
-      // console.log(data.base64);
-      // console.log(data.mimeType);
-      // const imss = data.base64;
-      // doc.image(imss, { width: 400 });
-      // doc.image(
-      //   new Buffer(
-      //     data.dataUri.replace('data:text/html; charset=UTF-8;base64,', ''),
-      //     'base64',
-      //   ),
-      //   100,
-      //   100,
-      // );
-      // doc.image(
-      //   new Buffer(
-      //     data.dataUri.replace('data:text/html; charset=UTF-8;base64,', ''),
-      //     'base64',
-      //   ),
-      //   100,
-      //   100,
-      // );
-    });
-  });
-  console.log(content);
+  //     // console.log(data.base64);
+  //     // console.log(data.mimeType);
+  //     // const imss = data.base64;
+  //     // doc.image(imss, { width: 400 });
+  //     // doc.image(
+  //     //   new Buffer(
+  //     //     data.dataUri.replace('data:text/html; charset=UTF-8;base64,', ''),
+  //     //     'base64',
+  //     //   ),
+  //     //   100,
+  //     //   100,
+  //     // );
+  //     // doc.image(
+  //     //   new Buffer(
+  //     //     data.dataUri.replace('data:text/html; charset=UTF-8;base64,', ''),
+  //     //     'base64',
+  //     //   ),
+  //     //   100,
+  //     //   100,
+  //     // );
+  //   });
+  // });
   pdf.create(content).toStream((err, stream) => {
     if (err) {
       response.error(req, res, err, 500);
