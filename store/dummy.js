@@ -57,7 +57,7 @@ const db = {
     },
     {
       id: 'y_8-e_lXKGTff8MxcTbPb',
-      numberId: 1019071661,
+      numberId: 1018071561,
       name: 'luis',
       lastName: 'parra',
       email: 'luis@gmail.com',
@@ -69,10 +69,42 @@ const db = {
   ],
   'auth': [
     {
-      id: 'y_8-e_lXKGTff8MxcTbPb',
-      username: 'luis.parra.1564',
-      rol: 'admin',
-      password: '$2b$05$AAMe5oi7Hun53aMdeZhUNuE0cU1seesVW2RKrj.n4hrkvRBlXPyWW',
+      'authUser': {
+        id: 'y_8-e_lXKGTff8MxcTbPb',
+        username: 'luis.parra.1564',
+        rol: 'admin',
+        password: '$2b$05$AAMe5oi7Hun53aMdeZhUNuE0cU1seesVW2RKrj.n4hrkvRBlXPyWW',
+      },
+      'user': {
+        _id: 'y_8-e_lXKGTff8MxcTbPb',
+        numberId: 1018071561,
+        name: 'luis',
+        lastName: 'parra',
+        email: 'luis@gmail.com',
+        contactNumber: '3145888791',
+        rol: 'admin',
+      },
+    },
+  ],
+  'exams': [
+    {
+      _id: '1',
+      idPatient: '2',
+      idBacteriologist: '3',
+      idMedic: '4',
+      registrationDate: 'today',
+      typeofexam: 'head',
+      status: 'ordered',
+      deleted: false,
+      resultsDate: 'today',
+    },
+  ],
+  'typesexams': [
+    {
+      id: '1',
+      name: 'head',
+      registrationDate: 'today',
+      deleted: false,
     },
   ],
 };
@@ -107,9 +139,7 @@ async function updateUser(document, data) {
     lastName: data.lastName,
     email: data.email,
     contactNumber: data.contactNumber,
-    userName: data.userName,
     rol: data.rol,
-    deleted: data.deleted,
   };
 
   return newUser;
@@ -127,6 +157,39 @@ async function login(username) {
   return db.auth[0];
 }
 
+async function upsert(table, exam) {
+  if (table === 'typesexams') {
+    const newType = {
+      id: '2',
+      name: exam.name,
+      registrationDate: 'today',
+      deleted: false,
+    };
+    db[table].push(newType);
+    return newType;
+  }
+  const newExam = {
+    idMedic: exam.idMedic,
+    idPatient: exam.idPatient,
+    deleted: false,
+    registrationDate: 'today',
+    status: 'pending',
+    typeOfExam: 'head',
+  };
+  if (!db[table]) {
+    db[table] = [];
+  }
+  db[table].push(newExam);
+  return newExam;
+}
+
+async function get(table, id) {
+  if (table === 'typesexams') {
+    return [db.typesexams[0]];
+  }
+  return [db.exams[0]];
+}
+
 module.exports = {
   list,
   getUsers,
@@ -135,4 +198,6 @@ module.exports = {
   updateUser,
   query,
   login,
+  upsert,
+  get,
 };

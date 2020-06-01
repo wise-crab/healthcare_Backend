@@ -9,6 +9,8 @@ const i2b = require('imageurl-base64');
 // const request = require('request').defaults({ encoding: null });
 const pdf = require('html-pdf');
 
+const { socket } = require('../../../socket');
+
 const config = require('../../../config');
 
 const response = require('../../../network/response');
@@ -62,6 +64,8 @@ function insert(req, res, next) {
 
         notificationsController.upsert(dataNotification);
 
+        socket.io.emit('message', dataNotification);
+
         return response.success(req, res, exam, 201);
       })
       .catch(next);
@@ -76,6 +80,8 @@ function insert(req, res, next) {
         };
 
         notificationsController.upsert(dataNotification);
+
+        socket.io.emit('message', dataNotification);
 
         return response.success(req, res, exam, 201);
       })

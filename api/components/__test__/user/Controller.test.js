@@ -10,7 +10,7 @@ const newUser = {
   lastName: 'Lopez',
   email: 'andrealopez@gmail.com',
   contactNumber: 3145669874,
-  rol: 'medic',
+  rol: 'doctor',
 };
 const userResult = {
   numberId: 1018071456,
@@ -18,7 +18,7 @@ const userResult = {
   lastName: 'lopez',
   email: 'andrealopez@gmail.com',
   contactNumber: 3145669874,
-  rol: 'medic',
+  rol: 'doctor',
   userName: 'andrea.lopez.1456',
   deleted: false,
 };
@@ -28,9 +28,7 @@ const updateUser = {
   lastName: 'lopez',
   email: 'andrealopez@gmail.com',
   contactNumber: 3145669874,
-  userName: 'andrea.lopez.1456',
-  rol: 'medic',
-  deleted: false,
+  rol: 'doctor',
 };
 
 describe('controller - user', () => {
@@ -56,7 +54,7 @@ describe('controller - user', () => {
   });
   test('should return update user', async () => {
     return Controller.update('1018071456', updateUser).then((user) => {
-      expect(user).toStrictEqual(userResult);
+      expect(user).toStrictEqual(updateUser);
     });
   });
 });
