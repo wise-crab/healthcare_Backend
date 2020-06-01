@@ -26,7 +26,7 @@ app.use(user);
 app.use(auth);
 app.use(typesExams);
 app.use(exams);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 server.listen(config.api.port, () => {
   process.stdout.write(
