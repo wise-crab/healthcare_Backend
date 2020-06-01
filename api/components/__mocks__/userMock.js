@@ -18,7 +18,7 @@ module.exports = [
     email: 'juan@gmail.com',
     contactNumber: 315685940,
     username: 'juanito',
-    rol: 'medic',
+    rol: 'doctor',
     deleted: false,
   },
   {
@@ -51,12 +51,12 @@ module.exports = [
     email: 'raul@gmail.com',
     contactNumber: 3154549216,
     username: 'raulll',
-    rol: 'medic',
+    rol: 'doctor',
     deleted: false,
   },
   {
     id: 'y_8-e_lXKGTff8MxcTbPb',
-    numberId: 1019071661,
+    numberId: 1018071561,
     name: 'luis',
     lastName: 'parra',
     email: 'luis@gmail.com',

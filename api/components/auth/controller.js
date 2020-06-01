@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { socket } = require('../../../socket');
 const auth = require('../../../auth');
 
 const TABLE = 'auth';
@@ -38,6 +39,7 @@ module.exports = function (injectedStore) {
             rol: user.rol,
           },
         };
+        socket.io.emit('message', `Welcome ${user._id}`);
         return response;
       }
       throw new Error('Invalid information');
