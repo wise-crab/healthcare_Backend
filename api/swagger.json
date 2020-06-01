@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "swagger": "2.0.0",
   "info": {
     "description": "The Laboratory (bacteriologist) wants a proper channel where can have a straight flow of information among him and the Doctor with the patient supervision. Due to the fact that the laboratory is aware that the patient wants to have a track report of the process, the laboratory developed Examedic in order to satisfy its clients informing on real-time about when his result of exam is available and a proper track of their information.",
     "version": "1.0.0",
@@ -13,22 +13,15 @@
       "description": "This are a CRUD operation for the users this only can be do if your are an admin"
     }
   ],
-  "schemes": [
-    "http",
-    "https"
-  ],
+  "schemes": ["http", "https"],
   "paths": {
     "/login": {
       "post": {
-        "tags": [
-          "login"
-        ],
+        "tags": ["login"],
         "summary": "user login",
         "description": "Create a jwt ",
         "operationId": "Login",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -49,15 +42,11 @@
     },
     "/users": {
       "post": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Create user",
         "description": "This can only be done by and admin.",
         "operationId": "createUser",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -76,15 +65,11 @@
         }
       },
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Global user search",
         "description": "This can only be done by and admin.",
         "operationId": "globalSearch",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -94,15 +79,11 @@
     },
     "/users/user": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Search a user",
         "description": "This can only be done by and admin, medic or bacte.",
         "operationId": "userSearch",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "query",
@@ -120,15 +101,11 @@
     },
     "/users-rol": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Get user by rol",
         "description": "This can only be done by admin, medic or bacteriologits.",
         "operationId": "rolSearch",
-        "produce": [
-          "application/json"
-        ],
+        "produce": ["application/json"],
         "parameters": [
           {
             "in": "query",
@@ -146,9 +123,7 @@
     },
     "/users-csv": {
       "post": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "mass creation of users",
         "description": "This can only be done by and admin.",
         "operationId": "createUserCsv",
@@ -170,9 +145,7 @@
     },
     "/users/:id": {
       "put": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Update a user",
         "description": "This can only be done by and admin",
         "operationId": "updateUser",
@@ -196,15 +169,11 @@
     },
     "/exams": {
       "get": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Global exams search",
         "description": "This can only be done by and docto or bacteriologist.",
         "operationId": "globalSearch",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -212,15 +181,11 @@
         }
       },
       "post": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Add and Exam",
         "description": "Create a jwt ",
         "operationId": "addExams",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -239,9 +204,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Update a Exam",
         "description": "This can only be done by and doctor or bacteriologist",
         "operationId": "updateExam",
@@ -265,9 +228,7 @@
     },
     "/exams/:id": {
       "put": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Search an exam",
         "description": "This can only be done by and Doctor",
         "operationId": "searchExam",
@@ -288,15 +249,11 @@
     },
     "/exams-query": {
       "get": {
-        "tags": [
-          "Exams"
-        ],
+        "tags": ["Exams"],
         "summary": "Exam by patient",
         "description": "Create a JSON",
         "operationId": "examByPatient",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -317,15 +274,11 @@
     },
     "/types-exams": {
       "post": {
-        "tags": [
-          "Types Exams"
-        ],
+        "tags": ["Types Exams"],
         "summary": "Create a type of exam",
         "description": "Create a jwt ",
         "operationId": "createTypeExam",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "in": "body",
@@ -346,9 +299,7 @@
     },
     "/types-exams/:id": {
       "put": {
-        "tags": [
-          "Types Exams"
-        ],
+        "tags": ["Types Exams"],
         "summary": "Update a Type exam",
         "description": "This can only be done by and Doctor",
         "operationId": "updateTypeExam",
