@@ -46,6 +46,6 @@
     "request": "^2.88.2",
     "swagger-ui-express": "^4.1.4",
     "url-conversion-base64": "^1.0.2",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   }
 }
