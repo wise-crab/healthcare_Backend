@@ -33,7 +33,7 @@
     "cors": "^2.8.5",
     "csv-parse": "^4.10.1",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "generate-password": "^1.5.1",
     "html-pdf": "^2.2.0",
     "imageurl-base64": "^1.0.0",
